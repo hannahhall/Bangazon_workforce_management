@@ -11,9 +11,10 @@ namespace BangazonHR.Models
         public string Make { get; set; }
         [Required]
         public string Model { get; set; }
+        [Display(Name = "Purchase Date")]
         [Required]
         public DateTime PurchaseDate { get; set; }
-       
+        [Display(Name = "Decommision Date")]
         public DateTime DecomissionDate { get; set; }
 
         public int EmployeeId { get; set; }
