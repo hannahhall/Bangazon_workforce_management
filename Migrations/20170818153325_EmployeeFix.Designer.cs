@@ -8,9 +8,10 @@ using BangazonHR.Data;
 namespace BangazonHR.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    partial class BangazonContextModelSnapshot : ModelSnapshot
+    [Migration("20170818153325_EmployeeFix")]
+    partial class EmployeeFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -23,14 +24,6 @@ namespace BangazonHR.Migrations
                     b.Property<DateTime>("DecomissionDate");
 
                     b.Property<int>("EmployeeId");
-
-                    b.Property<string>("Make")
-                        .IsRequired();
-
-                    b.Property<string>("Model")
-                        .IsRequired();
-
-                    b.Property<DateTime>("PurchaseDate");
 
                     b.HasKey("Id");
 

@@ -25,12 +25,10 @@ namespace BangazonHR.Data
         public DbSet<BangazonHR.Models.Employee> Employee { get; set; }
 
 
+        public DbSet<BangazonHR.Models.TrainingProgram> TrainingProgram { get; set; }
+
 
         public DbSet<BangazonHR.Models.Computer> Computer { get; set; }
-
-
-
-        public DbSet<BangazonHR.Models.TrainingProgram> TrainingProgram { get; set; }
 
 
     }

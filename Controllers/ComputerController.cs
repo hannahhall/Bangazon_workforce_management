@@ -57,7 +57,7 @@ namespace BangazonHR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DecomissionDate,EmployeeId")] Computer computer)
+        public async Task<IActionResult> Create([Bind("Id,Make,Model,PurchaseDate,DecomissionDate,EmployeeId")] Computer computer)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace BangazonHR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DecomissionDate,EmployeeId")] Computer computer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,PurchaseDate,DecomissionDate,EmployeeId")] Computer computer)
         {
             if (id != computer.Id)
             {

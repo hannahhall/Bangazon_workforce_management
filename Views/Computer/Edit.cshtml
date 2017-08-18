@@ -13,6 +13,27 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
         <div class="form-group">
+            <label asp-for="Make" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Make" class="form-control" />
+                <span asp-validation-for="Make" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Model" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PurchaseDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PurchaseDate" class="form-control" />
+                <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="DecomissionDate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="DecomissionDate" class="form-control" />

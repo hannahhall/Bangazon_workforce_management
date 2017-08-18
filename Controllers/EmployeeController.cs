@@ -65,6 +65,12 @@ namespace BangazonHR.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            else
+            {
+                Console.WriteLine(ModelState.IsValid);
+                Console.WriteLine(ModelState.Keys);
+                Console.WriteLine(ModelState.Values);
+            }
             ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", employee.DepartmentId);
             return View(employee);
         }
