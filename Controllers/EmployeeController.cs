@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BangazonHR.Data;
 using BangazonHR.Models;
+using BangazonHR.ViewModels;
 
 namespace BangazonHR.Controllers
 {
@@ -33,16 +34,26 @@ namespace BangazonHR.Controllers
             {
                 return NotFound();
             }
-
-            var employee = await _context.Employee
+            var vm = new EmployeeDetailViewModel();
+            vm.Employee = await _context.Employee
                 .Include(e => e.Department)
+                .Include(e => e.Computers)
+                .Include(e => e.TrainingEmployees)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            
+            foreach (var training in vm.Employee.TrainingEmployees)
+            {
+                TrainingProgram program = await _context.TrainingProgram
+                    .SingleOrDefaultAsync(t => t.Id == training.TrainingProgramId);
+                vm.TrainingPrograms.Add(program);
+            }
+            
+            if (vm.Employee == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(vm);
         }
 
         // GET: Employee/Create
@@ -64,12 +75,6 @@ namespace BangazonHR.Controllers
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                Console.WriteLine(ModelState.IsValid);
-                Console.WriteLine(ModelState.Keys);
-                Console.WriteLine(ModelState.Values);
             }
             ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", employee.DepartmentId);
             return View(employee);
