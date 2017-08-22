@@ -1,4 +1,4 @@
-@model BangazonHR.Models.Employee
+@model BangazonHR.ViewModels.EmployeeDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,32 +11,49 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Employee.FirstName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.Employee.FirstName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.Employee.LastName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.Employee.LastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.IsSupervisor)
+            @Html.DisplayNameFor(model => model.Employee.Department)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.IsSupervisor)
+            @Html.DisplayFor(model => model.Employee.Department.Name)
+            @if(Model.Employee.IsSupervisor)
+            {
+                <span>(Supervisor)</span>
+            }
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.DisplayNameFor(model => model.Employee.Computers)
         </dt>
+    @foreach (var computer in Model.Employee.Computers)
+    {
         <dd>
-            @Html.DisplayFor(model => model.Department.Name)
+            @computer.Model
         </dd>
+    }
+        <dt>
+              Training Programs  
+        </dt>
+    @foreach (var program in Model.TrainingPrograms)
+    {
+        <dd>
+           @program.Name, @program.StartDate
+        </dd>
+    }
+          
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Employee.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
