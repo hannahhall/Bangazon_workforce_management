@@ -8,8 +8,8 @@ using BangazonHR.Data;
 namespace BangazonHR.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20170817210712_TrainingProgram_mig")]
-    partial class TrainingProgram_mig
+    [Migration("20170822192031_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,15 @@ namespace BangazonHR.Migrations
 
                     b.Property<DateTime>("DecomissionDate");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<string>("Make")
+                        .IsRequired();
+
+                    b.Property<string>("Model")
+                        .IsRequired();
+
+                    b.Property<DateTime>("PurchaseDate");
 
                     b.HasKey("Id");
 
@@ -106,8 +114,7 @@ namespace BangazonHR.Migrations
                 {
                     b.HasOne("BangazonHR.Models.Employee", "Employee")
                         .WithMany("Computers")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("BangazonHR.Models.Employee", b =>

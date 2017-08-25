@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BangazonHR.Migrations
 {
-    public partial class Department_mig : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,7 +65,10 @@ namespace BangazonHR.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DecomissionDate = table.Column<DateTime>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
+                    EmployeeId = table.Column<int>(nullable: true),
+                    Make = table.Column<string>(nullable: false),
+                    Model = table.Column<string>(nullable: false),
+                    PurchaseDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +78,7 @@ namespace BangazonHR.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employee",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

@@ -22,7 +22,7 @@ namespace BangazonHR.Migrations
 
                     b.Property<DateTime>("DecomissionDate");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<int?>("EmployeeId");
 
                     b.Property<string>("Make")
                         .IsRequired();
@@ -113,8 +113,7 @@ namespace BangazonHR.Migrations
                 {
                     b.HasOne("BangazonHR.Models.Employee", "Employee")
                         .WithMany("Computers")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("BangazonHR.Models.Employee", b =>
