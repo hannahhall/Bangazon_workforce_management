@@ -17,7 +17,7 @@ namespace BangazonHR.Models
         [Display(Name = "Decommision Date")]
         public DateTime DecomissionDate { get; set; }
 
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
 

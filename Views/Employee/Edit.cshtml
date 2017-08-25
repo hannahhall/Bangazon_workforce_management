@@ -1,4 +1,4 @@
-@model BangazonHR.Models.Employee
+@model BangazonHR.ViewModels.EmployeeEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,34 +11,35 @@
         <h4>Employee</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Employee.Id" />
+    <input type="hidden" asp-for="Employee.FirstName" />
         <div class="form-group">
-            <label asp-for="FirstName" class="col-md-2 control-label"></label>
+            <label asp-for="Employee.LastName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="LastName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <input asp-for="Employee.LastName" class="form-control" />
+                <span asp-validation-for="Employee.LastName" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <div class="checkbox">
-                    <input asp-for="IsSupervisor" />
-                    <label asp-for="IsSupervisor"></label>
+                    <input asp-for="Employee.IsSupervisor" />
+                    <label asp-for="Employee.IsSupervisor"></label>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="DepartmentId" class="control-label col-md-2"></label>
+            <label asp-for="Employee.DepartmentId" class="control-label col-md-2"></label>
             <div class="col-md-10">
-                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
-                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                <select asp-for="Employee.DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
+                <span asp-validation-for="Employee.DepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ComputerId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="ComputerId" class="form-control" asp-items="ViewBag.ComputerId"></select>
+                <span asp-validation-for="ComputerId" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

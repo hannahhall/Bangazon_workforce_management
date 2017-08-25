@@ -87,14 +87,28 @@ namespace BangazonHR.Controllers
             {
                 return NotFound();
             }
-
-            var employee = await _context.Employee.SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            var vm = new EmployeeEditViewModel();
+            vm.Employee = await _context.Employee
+                .Include(e => e.Department)
+                .Include(e => e.Computers)
+                .Include(e => e.TrainingEmployees)
+                    .ThenInclude(t => t.TrainingProgram)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (vm.Employee == null)
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", employee.DepartmentId);
-            return View(employee);
+            foreach (var computer in _context.Computer)
+            {
+                if (computer.EmployeeId == null)
+                {
+                    vm.Computers.Add(computer);
+                }
+            }
+            
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", vm.Employee.DepartmentId);
+            ViewData["ComputerId"] = new SelectList(vm.Computers, "Id", "Model");
+            return View(vm);
         }
 
         // POST: Employee/Edit/5
@@ -102,9 +116,9 @@ namespace BangazonHR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,IsSupervisor,DepartmentId")] Employee employee)
+        public async Task<IActionResult> Edit(int id, EmployeeEditViewModel vm)
         {
-            if (id != employee.Id)
+            if (id != vm.Employee.Id)
             {
                 return NotFound();
             }
@@ -113,12 +127,16 @@ namespace BangazonHR.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(vm.Employee);
+                    await _context.SaveChangesAsync();
+                    Computer computer = _context.Computer.SingleOrDefault(c => c.Id == vm.ComputerId);
+                    computer.EmployeeId = id;
+                    _context.Update(computer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!EmployeeExists(vm.Employee.Id))
                     {
                         return NotFound();
                     }
@@ -129,8 +147,8 @@ namespace BangazonHR.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", employee.DepartmentId);
-            return View(employee);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", vm.Employee.DepartmentId);
+            return View(vm);
         }
 
         // GET: Employee/Delete/5
