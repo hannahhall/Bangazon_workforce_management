@@ -8,9 +8,10 @@ using BangazonHR.Data;
 namespace BangazonHR.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    partial class BangazonContextModelSnapshot : ModelSnapshot
+    [Migration("20170825163634_updateComputer")]
+    partial class updateComputer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
