@@ -19,6 +19,7 @@ namespace BangazonHR.Models
         [Required]
         public bool IsSupervisor { get; set; }
         [Required]
+        [Display(Name = "Department")]
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
         public ICollection<Computer> Computers { get; set; }
