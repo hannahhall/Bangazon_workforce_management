@@ -87,7 +87,7 @@ namespace BangazonHR.Controllers
             {
                 return NotFound();
             }
-            var vm = new EmployeeEditViewModel();
+            var vm = new EmployeeEditViewModel((int) id, _context);
             vm.Employee = await _context.Employee
                 .Include(e => e.Department)
                 .Include(e => e.Computers)
@@ -98,16 +98,9 @@ namespace BangazonHR.Controllers
             {
                 return NotFound();
             }
-            foreach (var computer in _context.Computer)
-            {
-                if (computer.EmployeeId == null)
-                {
-                    vm.Computers.Add(computer);
-                }
-            }
             
             ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Name", vm.Employee.DepartmentId);
-            ViewData["ComputerId"] = new SelectList(vm.Computers, "Id", "Model");
+            // ViewData["ComputerId"] = new SelectList(vm.Computers, "Id", "Model");
             return View(vm);
         }
 
@@ -127,11 +120,18 @@ namespace BangazonHR.Controllers
             {
                 try
                 {
+
                     _context.Update(vm.Employee);
-                    await _context.SaveChangesAsync();
-                    Computer computer = _context.Computer.SingleOrDefault(c => c.Id == vm.ComputerId);
-                    computer.EmployeeId = id;
-                    _context.Update(computer);
+                    
+                    Computer oldComputer = _context.Computer.SingleOrDefault(c => c.EmployeeId == id);
+                    Computer newComputer = _context.Computer.SingleOrDefault(c => c.Id == vm.ComputerId[0]);
+                    if (oldComputer != newComputer)
+                    {
+                        oldComputer.EmployeeId = null;
+                        newComputer.EmployeeId = id;
+                        _context.Update(newComputer);
+                        _context.Update(oldComputer);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
